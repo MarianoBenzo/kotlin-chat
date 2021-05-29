@@ -1,0 +1,33 @@
+{
+    "typeRoots": [
+        "../node_modules/@types",
+        "../@types"
+    ],
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "module": "esnext",
+        "target": "es5",
+        "lib": ["es5", "es2015", "es2016", "dom"],
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "typeRoots" : ["node_modules/@types"],
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "paths": {
+            "services/*": ["src/services/*"],
+            "models/*": ["src/models/*"],
+            "utils/*": ["src/utils/*"],
+            "components/*": ["src/components/*"]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

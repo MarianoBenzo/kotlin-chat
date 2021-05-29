@@ -1,0 +1,60 @@
+{
+  "name": "kotlin-chat",
+  "version": "1.0.0",
+  "description": "Kotlin Chat App",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --watch --info-verbosity verbose",
+    "build": "npm run cross-env NODE_ENV=production webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarianoBenzo/kotlin-chat.git"
+  },
+  "author": "Mariano Benzo",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/node": "^14.0.26",
+    "classnames": "^2.2.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^4.0.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "resolve-url-loader": "^3.1.1",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.2",
+    "terser-webpack-plugin": "^4.2.3",
+    "ts-loader": "^8.0.1",
+    "typescript": "^3.9.7",
+    "webpack": "^4.44.0",
+    "webpack-bundle-analyzer": "^3.9.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@loadable/component": "^5.13.1",
+    "@types/classnames": "^2.2.10",
+    "@types/object-hash": "^1.3.3",
+    "@types/react": "^16.9.43",
+    "@types/react-copy-to-clipboard": "^4.3.0",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "axios": "^0.21.1",
+    "bourbon": "^7.0.0",
+    "copy-webpack-plugin": "^6.0.3",
+    "cross-env": "^7.0.2",
+    "extract-loader": "^5.1.0",
+    "object-hash": "^2.0.3",
+    "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.2",
+    "react-dom": "^16.13.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-slick": "^0.25.2",
+    "style-loader": "^1.2.1"
+  }
+}
