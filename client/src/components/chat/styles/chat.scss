@@ -6,17 +6,19 @@
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+    background-color: #888;
 
     .usersBox {
         width: 300px;
-        border: 1px solid #ccc;
         border-radius: 8px;
         margin-right: 12px;
+        background-color: #ccc;
 
         .title {
             padding: 12px;
             font-weight: bold;
-            background-color: #eee;
+            background-color: #aaa;
+            border-radius: 8px 8px 0 0;
         }
 
         .user {
@@ -27,23 +29,36 @@
 
     .messagesBox {
         width: 100%;
-        border: 1px solid #ccc;
         border-radius: 8px;
         display: flex;
         flex-direction: column;
+        background-color: #ccc;
 
         .title {
             padding: 12px;
             font-weight: bold;
-            background-color: #eee;
+            background-color: #aaa;
+            border-radius: 8px 8px 0 0;
         }
 
         .messages {
             overflow-y: scroll;
             flex-grow: 1;
+            background-color: #fff;
+            padding-bottom: 12px;
+            overflow-wrap: anywhere;
 
             .message {
                 padding: 12px 12px 0 12px;
+
+                .userName {
+                    font-weight: bold;
+                }
+
+                .serverMessage {
+                    font-style: italic;
+                    color: #aaa;
+                }
             }
         }
 

@@ -2,14 +2,15 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import ChatService from "services/ChatService";
 import User from "models/User";
+import Message from "models/Message";
 
 interface Props {
     children: JSX.Element[] | JSX.Element
 }
 
 export interface ChatContextProps {
-    users: User[];
-    messages: string[];
+    users: Array<User>;
+    messages: Array<Message>;
 }
 
 export const ChatContext = React.createContext<ChatContextProps>({

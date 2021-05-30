@@ -3,6 +3,8 @@ package service
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import model.Message
+import model.MessageType
+import model.MessageWS
 import model.User
 import org.eclipse.jetty.websocket.api.Session
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose
@@ -15,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong
 class ChatWebSocketService {
 
     val users = HashMap<Session, User>()
-    val messages = mutableListOf<String>()
+    val messages = mutableListOf<Message>()
     var uids = AtomicLong(0)
 
     @OnWebSocketConnect
@@ -26,25 +28,29 @@ class ChatWebSocketService {
 
     @OnWebSocketMessage
     fun onMessage(session: Session, message: String) {
-        val message2 = jacksonObjectMapper().readValue<Message>(message)
+        val messageWS = jacksonObjectMapper().readValue<MessageWS>(message)
 
-        when (message2.type) {
+        when (messageWS.type) {
             "join" -> {
                 val id = uids.getAndIncrement()
-                val name = message2.data?.let { it as String } ?: "Unknown-$id"
+                val name = messageWS.data?.let { it as String } ?: "Unknown-$id"
                 val user = User(id, name)
                 users[session] = user
+                messages.add(Message(name, "has connected", MessageType.SERVER))
 
-                broadcast(Message("users", users.values))
-                emit(session, Message("messages", messages))
+                broadcast(MessageWS("users", users.values))
+                broadcast(MessageWS("messages", messages))
 
                 println("Join - User: ${user.name}")
             }
             "say" -> {
-                messages.add(message2.data as String)
-                broadcast(Message("messages", messages))
+                val userName = users[session]?.name ?: "Unknown"
+                val newMessage = Message(userName, messageWS.data as String)
+                messages.add(newMessage)
 
-                println("Say - Message: ${message2.data}")
+                broadcast(MessageWS("messages", messages))
+
+                println("Say - Message: $newMessage")
             }
         }
     }
@@ -55,18 +61,22 @@ class ChatWebSocketService {
         val user = users.remove(session)
         // notify all other users this user has disconnected
         if (user != null) {
-            broadcast(Message("users", users.values))
+            messages.add(Message(user.name, "has disconnected", MessageType.SERVER))
+
+            broadcast(MessageWS("users", users.values))
+            broadcast(MessageWS("messages", messages))
+
             println("Session Disconnected - User: ${user.name}")
         } else {
             println("Session Disconnected")
         }
     }
 
-    fun emit(session: Session, message: Message) =
-        session.remote.sendString(jacksonObjectMapper().writeValueAsString(message))
+    fun emit(session: Session, messageWS: MessageWS) =
+        session.remote.sendString(jacksonObjectMapper().writeValueAsString(messageWS))
 
-    fun broadcast(message: Message) = users.forEach { emit(it.key, message) }
+    fun broadcast(messageWS: MessageWS) = users.forEach { emit(it.key, messageWS) }
 
-    private fun broadcastToOthers(session: Session, message: Message) =
-        users.filter { it.key != session }.forEach { emit(it.key, message)}
+    private fun broadcastToOthers(session: Session, messageWS: MessageWS) =
+        users.filter { it.key != session }.forEach { emit(it.key, messageWS)}
 }
