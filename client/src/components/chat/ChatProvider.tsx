@@ -24,23 +24,6 @@ const ChatProvider = (props: Props) => {
     const [users, setUsers] = useState([]);
     const [messages, setMessages] = useState([]);
 
-    const addMessage = (message: string) => {
-        setMessages(messages.concat([message]))
-    }
-
-    const addUser = (user: User) => {
-        console.log("addUser: ", user.name)
-        console.log("users: ", users)
-        const newUsers = users.concat(user)
-        console.log("newUsers: ", newUsers)
-        setUsers(newUsers)
-    }
-
-    const removeUser = (userToRemove: User) => {
-        const newUsers = users.filter((user: User) => user.id === userToRemove.id)
-        setUsers(newUsers)
-    }
-
     useEffect(() => {
         ChatService.init(setUsers, setMessages);
     }, []);

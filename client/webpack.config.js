@@ -45,7 +45,9 @@ module.exports = {
         },
         extensions: [".ts", ".tsx", ".js", ".css", ".scss"]
     },
-    plugins: isProduction ? Plugins.production : Plugins.development,
+    plugins: [
+        ...Plugins.base,
+    ].concat(isProduction ? Plugins.production : Plugins.development),
     module: {
         rules: [
             {

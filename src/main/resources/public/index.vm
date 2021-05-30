@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>$title</title>
+
+        <link rel="stylesheet" href="static/stylesheets/normalize.css" />
     </head>
 
     <body>

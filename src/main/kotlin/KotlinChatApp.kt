@@ -10,7 +10,7 @@ private class KotlinChatApp(private val injector: Injector) {
 
     fun configure() = apply {
         port(9000)
-        staticFileLocation("/public")
+        staticFiles.externalLocation("src/main/resources/public")
         webSocket("/ws/chat", ChatWebSocketService::class.java)
         injector.getInstance(Routes::class.java).register()
     }
