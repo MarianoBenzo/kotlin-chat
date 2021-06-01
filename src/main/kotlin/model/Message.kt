@@ -3,10 +3,11 @@ package model
 data class Message(
     val userName: String,
     val text: String,
-    val type: MessageType = MessageType.CLIENT
+    val type: MessageType
 )
 
 enum class MessageType {
-    SERVER,
-    CLIENT
+    OWN,
+    USER,
+    SERVER
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import MessageWS, {MessageWSType} from "models/MessageWS";
 
 class ChatService {
     webSocket: WebSocket;
@@ -9,16 +10,16 @@ class ChatService {
 
     init(setUsers: Function, setMessages: Function) {
         this.webSocket.onmessage = (messageEvent: MessageEvent) => {
-            const messageData = JSON.parse(messageEvent.data)
+            const messageWS = JSON.parse(messageEvent.data)
 
-            console.log(messageData.type + ": ", messageData.data)
+            console.log(messageWS.type + ": ", messageWS.data)
 
-            switch (messageData.type) {
-                case "messages":
-                    setMessages(messageData.data)
+            switch (messageWS.type) {
+                case MessageWSType.MESSAGES:
+                    setMessages(messageWS.data)
                     break;
-                case "users":
-                    setUsers(messageData.data)
+                case MessageWSType.USERS:
+                    setUsers(messageWS.data)
                     break;
             }
         }
@@ -30,13 +31,13 @@ class ChatService {
         this.webSocket.onopen = () => {
             let name = "";
             while (name === "") name = prompt("Enter your name");
-            this.sendMessage("join", name);
+            this.sendMessageWS(new MessageWS(MessageWSType.JOIN, name));
         }
     }
 
-    sendMessage(type, data) {
-        if (data !== "") {
-            this.webSocket.send(JSON.stringify({type: type, data: data}));
+    sendMessageWS(messageWS: MessageWS) {
+        if (messageWS.data !== "") {
+            this.webSocket.send(JSON.stringify(messageWS));
         }
     }
 }

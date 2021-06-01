@@ -1,64 +1,104 @@
 .container {
-    font-family: sans-serif;
+    font-family: Rubik, Arial, sans-serif;
     display: flex;
     padding: 12px;
     position: absolute;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    background-color: #888;
+    background-color: #141c20;
+    letter-spacing: .6px;
+    line-height: 1.2;
 
     .usersBox {
         width: 300px;
-        border-radius: 8px;
         margin-right: 12px;
-        background-color: #ccc;
+        background-color: #1e2428;
+        display: flex;
+        flex-direction: column;
 
         .title {
+            color: #e1e2e3;
             padding: 12px;
-            font-weight: bold;
-            background-color: #aaa;
-            border-radius: 8px 8px 0 0;
+            font-size: 16px;
+            background-color: #2a2f32;
         }
 
-        .user {
-            font-style: italic;
-            padding: 12px 12px 0 12px;
+        .users {
+            overflow-y: scroll;
+            flex-grow: 1;
+            padding-bottom: 16px;
+            overflow-wrap: anywhere;
+
+            .userName {
+                font-size: 14px;
+                padding: 16px 16px 0 16px;
+                color: #f1f1f2;
+            }
         }
     }
 
     .messagesBox {
         width: 100%;
-        border-radius: 8px;
         display: flex;
         flex-direction: column;
-        background-color: #ccc;
+        background-color: #1e2428;
 
         .title {
+            color: #e1e2e3;
             padding: 12px;
-            font-weight: bold;
-            background-color: #aaa;
-            border-radius: 8px 8px 0 0;
+            font-size: 16px;
+            background-color: #2a2f32;
         }
 
         .messages {
             overflow-y: scroll;
             flex-grow: 1;
-            background-color: #fff;
+            background-color: #0c1419;
             padding-bottom: 12px;
             overflow-wrap: anywhere;
+            font-size: 14px;
 
-            .message {
+            .ownMessage {
+                padding: 12px 12px 0 12px;
+                text-align: right;
+
+                .bubble {
+                    color: #f1f1f2;
+                    background-color: #056162;
+                    border-radius: 8px;
+                    padding: 8px;
+                    display: inline-block;
+                    max-width: 50%;
+                    min-width: 100px;
+                    text-align: left;
+                }
+            }
+
+            .userMessage {
                 padding: 12px 12px 0 12px;
 
-                .userName {
-                    font-weight: bold;
-                }
+                .bubble {
+                    color: #f1f1f2;
+                    background-color: #262d31;
+                    border-radius: 8px;
+                    padding: 8px;
+                    display: inline-block;
+                    max-width: 50%;
+                    min-width: 100px;
 
-                .serverMessage {
-                    font-style: italic;
-                    color: #aaa;
+                    .userName {
+                        font-weight: 600;
+                        padding-bottom: 4px;
+                    }
                 }
+            }
+
+            .serverMessage {
+                padding: 14px 12px 0 12px;
+                font-style: italic;
+                color: #787c7f;
+                text-align: center;
             }
         }
 
@@ -69,11 +109,15 @@
             input[type=text], select {
                 width: 100%;
                 padding: 12px;
+                font-size: 14px;
                 display: inline-block;
-                border: 1px solid #ccc;
-                border-radius: 4px;
                 box-sizing: border-box;
+                outline: 0;
                 margin-right: 12px;
+                background-color: #33383b;
+                border: 1px solid #33383b;
+                border-radius: 20px;
+                color: #f1f1f2;
             }
 
             button {
@@ -81,23 +125,17 @@
                 border: none;
                 padding: 12px 18px;
                 text-decoration: none;
-                background: #0069ed;
+                background: #00af9b;
                 color: #ffffff;
-                border-radius: 4px;
-                font-size: 12px;
-                line-height: 1;
+                border-radius: 20px;
+                font-size: 14px;
                 cursor: pointer;
                 text-align: center;
                 transition: background 250ms ease-in-out, transform 150ms ease;
 
                 &:hover,
                 &:focus {
-                    background: #0053ba;
-                }
-
-                &:focus {
-                    outline: 1px solid #fff;
-                    outline-offset: -4px;
+                    background: #009080;
                 }
 
                 &:active {

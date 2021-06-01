@@ -5,6 +5,7 @@ import ChatService from "services/ChatService";
 import User from "models/User";
 import styles from "./styles/chat.scss";
 import Message, {MessageType} from "models/Message";
+import MessageWS, {MessageWSType} from "models/MessageWS";
 
 const Chat = React.memo(() => {
     const {users, messages} = useContext(ChatContext);
@@ -34,7 +35,7 @@ const Chat = React.memo(() => {
     }
 
     const sendMessage = () => {
-        ChatService.sendMessage("say", message)
+        ChatService.sendMessageWS(new MessageWS(MessageWSType.SAY, message))
         setMessage("")
     };
 
@@ -47,12 +48,14 @@ const Chat = React.memo(() => {
     return (
         <div className={styles.container}>
             <div className={styles.usersBox}>
-                <div className={styles.title}>Users</div>
-                {
-                    users.map((user: User, index: number) => {
-                        return <p className={styles.user} key={index}>{user.name}</p>
-                    })
-                }
+                <div className={styles.title}>Users Online</div>
+                    <div className={styles.users}>
+                        {
+                            users.map((user: User, index: number) => {
+                                return <p className={styles.userName} key={index}>{user.name}</p>
+                            })
+                        }
+                    </div>
             </div>
 
             <div className={styles.messagesBox}>
@@ -62,17 +65,29 @@ const Chat = React.memo(() => {
                     {
                         messages.map((message: Message, index: number) => {
                             switch (message.type) {
-                                case MessageType.CLIENT:
+                                case MessageType.OWN:
                                     return (
-                                        <div className={styles.message} key={index}>
-                                            <span className={styles.userName}>{message.userName}: </span>
-                                            <span>{message.text}</span>
+                                        <div className={styles.ownMessage} key={index}>
+                                            <div className={styles.bubble}>
+                                                <p>{message.text}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                case MessageType.USER:
+                                    return (
+                                        <div className={styles.userMessage} key={index}>
+                                            <div className={styles.bubble}>
+                                                <p className={styles.userName}>{message.userName}</p>
+                                                <p>{message.text}</p>
+                                            </div>
                                         </div>
                                     )
                                 case MessageType.SERVER:
                                     return (
-                                        <div className={styles.message} key={index}>
-                                            <span className={styles.serverMessage}>{message.userName} {message.text}</span>
+                                        <div className={styles.serverMessage} key={index}>
+                                            <p>
+                                                {message.userName} {message.text}
+                                            </p>
                                         </div>
                                     )
                             }

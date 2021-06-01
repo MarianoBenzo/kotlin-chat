@@ -45,7 +45,7 @@ class ChatWebSocketService {
             }
             "say" -> {
                 val userName = users[session]?.name ?: "Unknown"
-                val newMessage = Message(userName, messageWS.data as String)
+                val newMessage = Message(userName, messageWS.data as String, MessageType.USER)
                 messages.add(newMessage)
 
                 broadcast(MessageWS("messages", messages))

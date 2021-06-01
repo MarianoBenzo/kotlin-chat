@@ -5,6 +5,7 @@ export default class Message {
 }
 
 export const MessageType = {
-	SERVER: "SERVER",
-	CLIENT: "CLIENT"
+	OWN: "OWN",
+	USER: "USER",
+	SERVER: "SERVER"
 }
