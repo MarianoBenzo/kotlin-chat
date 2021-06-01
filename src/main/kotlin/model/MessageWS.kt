@@ -1,6 +1,17 @@
 package model
 
-data class MessageWS(
-    val type: String,
-    val data: Any?
-)
+class MessageWS(type: MessageWSType, val data: Any?) {
+    val type = type.name
+}
+
+enum class MessageWSType {
+    USERS,
+    ADD_USER,
+    REMOVE_USER,
+    NEW_USER,
+    ADD_MESSAGE,
+    NEW_MESSAGE,
+    USERS_WRITING,
+    ADD_WRITING,
+    REMOVE_WRITING
+}

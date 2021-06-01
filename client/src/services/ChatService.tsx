@@ -8,20 +8,35 @@ class ChatService {
         this.webSocket = new WebSocket(`ws://${location.hostname}:${location.port}/ws/chat`);
     }
 
-    init(setUsers: Function, setMessages: Function) {
+    init(
+        setUsers: Function,
+        addUser: Function,
+        removeUser: Function,
+        addMessage: Function,
+        setUsersWriting: Function
+    ) {
         this.webSocket.onmessage = (messageEvent: MessageEvent) => {
             const messageWS = JSON.parse(messageEvent.data)
 
-            console.log(messageWS.type + ": ", messageWS.data)
-
             switch (messageWS.type) {
-                case MessageWSType.MESSAGES:
-                    setMessages(messageWS.data)
-                    break;
                 case MessageWSType.USERS:
                     setUsers(messageWS.data)
                     break;
+                case MessageWSType.ADD_USER:
+                    addUser(messageWS.data)
+                    break;
+                case MessageWSType.REMOVE_USER:
+                    removeUser(messageWS.data)
+                    break;
+                case MessageWSType.ADD_MESSAGE:
+                    addMessage(messageWS.data)
+                    break;
+                case MessageWSType.USERS_WRITING:
+                    setUsersWriting(messageWS.data)
+                    break;
             }
+
+            console.log(`Received: ${messageWS.type}`, messageWS.data)
         }
 
         this.webSocket.onclose = () => {
@@ -31,7 +46,7 @@ class ChatService {
         this.webSocket.onopen = () => {
             let name = "";
             while (name === "") name = prompt("Enter your name");
-            this.sendMessageWS(new MessageWS(MessageWSType.JOIN, name));
+            this.sendMessageWS(new MessageWS(MessageWSType.NEW_USER, name));
         }
     }
 

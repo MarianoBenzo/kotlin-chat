@@ -8,9 +8,10 @@ import Message, {MessageType} from "models/Message";
 import MessageWS, {MessageWSType} from "models/MessageWS";
 
 const Chat = React.memo(() => {
-    const {users, messages} = useContext(ChatContext);
+    const {users, messages, usersWriting} = useContext(ChatContext);
 
     const [message, setMessage] = useState('');
+    const [isWriting, setIsWriting] = useState(false);
     const [isBottom, setIsBottom] = useState(true);
 
     const messagesEndRef = useRef(null)
@@ -34,8 +35,23 @@ const Chat = React.memo(() => {
         }
     }
 
+    const inputOnChange = (e) => {
+        setMessage(e.target.value.slice(0, 200))
+        if (!isWriting) {
+            setIsWriting(true)
+            ChatService.sendMessageWS(new MessageWS(MessageWSType.ADD_WRITING))
+            setTimeout(
+                () => {
+                    setIsWriting(false)
+                    ChatService.sendMessageWS(new MessageWS(MessageWSType.REMOVE_WRITING))
+                },
+                3000
+            );
+        }
+    }
+
     const sendMessage = () => {
-        ChatService.sendMessageWS(new MessageWS(MessageWSType.SAY, message))
+        ChatService.sendMessageWS(new MessageWS(MessageWSType.NEW_MESSAGE, message))
         setMessage("")
     };
 
@@ -93,14 +109,22 @@ const Chat = React.memo(() => {
                             }
                         })
                     }
+                    { usersWriting.length != 0 &&
+                        <div className={styles.areWriting}>
+                            {usersWriting.length === 1 ?
+                                `${usersWriting[0].name} is writing...`
+                                :
+                                `${usersWriting.slice(0, usersWriting.length - 1).map(user => user.name).join(", ")} and ${usersWriting[usersWriting.length - 1].name} are writing...`
+                            }
+                        </div>
+                    }
                     <div ref={messagesEndRef}/>
                 </div>
-
                 <div className={styles.messageInput}>
                     <input type="text"
                            value={message}
                            placeholder="Write a message here"
-                           onChange={e => setMessage(e.target.value.slice(0, 200))}
+                           onChange={inputOnChange}
                            onKeyDown={handleKeyDown}/>
 
                     <button onClick={sendMessage}>
