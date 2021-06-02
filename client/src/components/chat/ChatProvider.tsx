@@ -11,13 +11,13 @@ interface Props {
 export interface ChatContextProps {
     users: Array<User>;
     messages: Array<Message>;
-    usersWriting: Array<User>;
+    usersTyping: Array<User>;
 }
 
 export const ChatContext = React.createContext<ChatContextProps>({
     users: [],
     messages: [],
-    usersWriting: []
+    usersTyping: []
 });
 
 const ChatProvider = (props: Props) => {
@@ -26,28 +26,40 @@ const ChatProvider = (props: Props) => {
 
     const [users, setUsers] = useState([]);
     const [messages, setMessages] = useState([]);
-    const [usersWriting, setUsersWriting] = useState([]);
+    const [usersTyping, setUsersTyping] = useState([]);
 
     const addUser = (newUser: User) => {
         setUsers(users => [...users, newUser])
     }
 
     const removeUser = (deletedUser: User) => {
-        setUsers(users => users.filter(user => user.id !== deletedUser.id))
+        setUsers(users => users.filter(
+            user => user.id !== deletedUser.id
+        ))
     }
 
     const addMessage = (newMessage: Message) => {
         setMessages(messages => [...messages, newMessage])
     }
 
+    const addUserTyping = (newUserTyping: User) => {
+        setUsersTyping(usersTyping => [...usersTyping, newUserTyping])
+    }
+
+    const removeUserTyping = (deletedUserTyping: User) => {
+        setUsersTyping(usersTyping => usersTyping.filter(
+            userTyping => userTyping.id !== deletedUserTyping.id
+        ))
+    }
+
     useEffect(() => {
-        ChatService.init(setUsers, addUser, removeUser, addMessage, setUsersWriting);
+        ChatService.init(setUsers, addUser, removeUser, addMessage, addUserTyping, removeUserTyping);
     }, []);
 
     const context: ChatContextProps = {
         users: users,
         messages: messages,
-        usersWriting: usersWriting
+        usersTyping: usersTyping
     };
 
     return (

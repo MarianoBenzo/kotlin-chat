@@ -1,17 +1,22 @@
 package model
 
-class MessageWS(type: MessageWSType, val data: Any?) {
-    val type = type.name
+class MessageWS(val type: String, val data: Any?) {
+    constructor(type: ClientMessageWSType, data: Any?) : this(type.name, data)
+    constructor(type: ServerMessageWSType, data: Any?) : this(type.name, data)
 }
 
-enum class MessageWSType {
+enum class ClientMessageWSType {
+    NEW_USER,
+    NEW_MESSAGE,
+    STARTED_TYPING,
+    STOPPED_TYPING
+}
+
+enum class ServerMessageWSType {
     USERS,
     ADD_USER,
     REMOVE_USER,
-    NEW_USER,
     ADD_MESSAGE,
-    NEW_MESSAGE,
-    USERS_WRITING,
-    ADD_WRITING,
-    REMOVE_WRITING
+    ADD_USER_TYPING,
+    REMOVE_USER_TYPING
 }

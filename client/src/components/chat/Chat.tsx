@@ -5,13 +5,13 @@ import ChatService from "services/ChatService";
 import User from "models/User";
 import styles from "./styles/chat.scss";
 import Message, {MessageType} from "models/Message";
-import MessageWS, {MessageWSType} from "models/MessageWS";
+import {ClientMessageWSType} from "models/MessageWS";
 
 const Chat = React.memo(() => {
-    const {users, messages, usersWriting} = useContext(ChatContext);
+    const {users, messages, usersTyping} = useContext(ChatContext);
 
     const [message, setMessage] = useState('');
-    const [isWriting, setIsWriting] = useState(false);
+    const [isTyping, setIsTyping] = useState(false);
     const [isBottom, setIsBottom] = useState(true);
 
     const messagesEndRef = useRef(null)
@@ -37,13 +37,13 @@ const Chat = React.memo(() => {
 
     const inputOnChange = (e) => {
         setMessage(e.target.value.slice(0, 200))
-        if (!isWriting) {
-            setIsWriting(true)
-            ChatService.sendMessageWS(new MessageWS(MessageWSType.ADD_WRITING))
+        if (!isTyping) {
+            setIsTyping(true)
+            ChatService.sendMessageWS(ClientMessageWSType.STARTED_TYPING)
             setTimeout(
                 () => {
-                    setIsWriting(false)
-                    ChatService.sendMessageWS(new MessageWS(MessageWSType.REMOVE_WRITING))
+                    setIsTyping(false)
+                    ChatService.sendMessageWS(ClientMessageWSType.STOPPED_TYPING)
                 },
                 3000
             );
@@ -51,7 +51,7 @@ const Chat = React.memo(() => {
     }
 
     const sendMessage = () => {
-        ChatService.sendMessageWS(new MessageWS(MessageWSType.NEW_MESSAGE, message))
+        ChatService.sendMessageWS(ClientMessageWSType.NEW_MESSAGE, message)
         setMessage("")
     };
 
@@ -109,12 +109,12 @@ const Chat = React.memo(() => {
                             }
                         })
                     }
-                    { usersWriting.length != 0 &&
-                        <div className={styles.areWriting}>
-                            {usersWriting.length === 1 ?
-                                `${usersWriting[0].name} is writing...`
+                    { usersTyping.length != 0 &&
+                        <div className={styles.usersTyping}>
+                            {usersTyping.length === 1 ?
+                                `${usersTyping[0].name} is typing...`
                                 :
-                                `${usersWriting.slice(0, usersWriting.length - 1).map(user => user.name).join(", ")} and ${usersWriting[usersWriting.length - 1].name} are writing...`
+                                `${usersTyping.slice(0, usersTyping.length - 1).map(user => user.name).join(", ")} and ${usersTyping[usersTyping.length - 1].name} are typing...`
                             }
                         </div>
                     }

@@ -1,5 +1,5 @@
 import React from "react";
-import MessageWS, {MessageWSType} from "models/MessageWS";
+import MessageWS, {ClientMessageWSType, ServerMessageWSType} from "models/MessageWS";
 
 class ChatService {
     webSocket: WebSocket;
@@ -13,26 +13,30 @@ class ChatService {
         addUser: Function,
         removeUser: Function,
         addMessage: Function,
-        setUsersWriting: Function
+        addUserTyping: Function,
+        removeUserTyping: Function
     ) {
         this.webSocket.onmessage = (messageEvent: MessageEvent) => {
             const messageWS = JSON.parse(messageEvent.data)
 
             switch (messageWS.type) {
-                case MessageWSType.USERS:
+                case ServerMessageWSType.USERS:
                     setUsers(messageWS.data)
                     break;
-                case MessageWSType.ADD_USER:
+                case ServerMessageWSType.ADD_USER:
                     addUser(messageWS.data)
                     break;
-                case MessageWSType.REMOVE_USER:
+                case ServerMessageWSType.REMOVE_USER:
                     removeUser(messageWS.data)
                     break;
-                case MessageWSType.ADD_MESSAGE:
+                case ServerMessageWSType.ADD_MESSAGE:
                     addMessage(messageWS.data)
                     break;
-                case MessageWSType.USERS_WRITING:
-                    setUsersWriting(messageWS.data)
+                case ServerMessageWSType.ADD_USER_TYPING:
+                    addUserTyping(messageWS.data)
+                    break;
+                case ServerMessageWSType.REMOVE_USER_TYPING:
+                    removeUserTyping(messageWS.data)
                     break;
             }
 
@@ -46,14 +50,12 @@ class ChatService {
         this.webSocket.onopen = () => {
             let name = "";
             while (name === "") name = prompt("Enter your name");
-            this.sendMessageWS(new MessageWS(MessageWSType.NEW_USER, name));
+            this.sendMessageWS(ClientMessageWSType.NEW_USER, name);
         }
     }
 
-    sendMessageWS(messageWS: MessageWS) {
-        if (messageWS.data !== "") {
-            this.webSocket.send(JSON.stringify(messageWS));
-        }
+    sendMessageWS(type: ClientMessageWSType, data?: any) {
+        this.webSocket.send(JSON.stringify(new MessageWS(type, data)));
     }
 }
 
