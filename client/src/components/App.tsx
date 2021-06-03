@@ -10,7 +10,7 @@ const App = () => (
             <BrowserRouter>
                 <Suspense fallback={null}>
                     <Switch>
-                        <Route exact path="/chat" component={Chat}/>
+                        <Route exact path="/" component={Chat}/>
                     </Switch>
                 </Suspense>
             </BrowserRouter>

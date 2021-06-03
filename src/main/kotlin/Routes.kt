@@ -5,6 +5,6 @@ class Routes(
     private val pageViewController: PageViewController
 ) {
     fun register() {
-        get("/chat", pageViewController.index())
+        get("/", pageViewController.index())
     }
 }
