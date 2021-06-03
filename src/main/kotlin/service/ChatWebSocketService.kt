@@ -54,6 +54,11 @@ class ChatWebSocketService {
                 users[session]?.let {
                     val newMessage = messageWS.data as String
 
+                    broadcastToOthers(
+                        session,
+                        ServerMessageWSType.REMOVE_USER_TYPING,
+                        it
+                    )
                     emit(
                         session,
                         ServerMessageWSType.ADD_MESSAGE,
