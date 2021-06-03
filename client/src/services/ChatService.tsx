@@ -46,12 +46,6 @@ class ChatService {
         this.webSocket.onclose = () => {
            alert("Server Disconnect You")
         }
-
-        this.webSocket.onopen = () => {
-            let name = "";
-            while (name === "") name = prompt("Enter your name");
-            this.sendMessageWS(ClientMessageWSType.NEW_USER, name);
-        }
     }
 
     sendMessageWS(type: ClientMessageWSType, data?: any) {

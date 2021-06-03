@@ -1,0 +1,13 @@
+.container {
+    font-family: Rubik, Arial, sans-serif;
+    letter-spacing: 0.6px;
+    line-height: 1.2;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #090e11;
+
+    @media (max-width: 767px) {
+        position: static;
+    }
+}

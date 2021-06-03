@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const devtool = isProduction ? "hidden-source-map" : "source-map";
 
 const entryPoints = {
-    "main": ["./src/App.tsx"]
+    "main": ["./src/components/App.tsx"]
 };
 
 const optimization = {

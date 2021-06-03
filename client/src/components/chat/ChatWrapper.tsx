@@ -1,12 +1,15 @@
 import React from "react";
 import ChatProvider from "components/chat/ChatProvider";
 import Chat from "./Chat";
+import ModalProvider from "components/modal/ModalProvider";
 
-const ChatWrapper = (): JSX.Element => {
+const ChatWrapper = () => {
     return (
-        <ChatProvider>
-            <Chat/>
-        </ChatProvider>
+        <ModalProvider>
+            <ChatProvider>
+                <Chat/>
+            </ChatProvider>
+        </ModalProvider>
     );
 };
 
