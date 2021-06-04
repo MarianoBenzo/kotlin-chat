@@ -9,17 +9,11 @@ import kotlin.system.exitProcess
 private class KotlinChatApp(private val injector: Injector) {
 
     fun configure() = apply {
-        port(getHerokuAssignedPort())
-        staticFiles.externalLocation("src/main/resources/public")
+        port(System.getenv("PORT")?.toInt() ?: 9000)
+        //staticFiles.externalLocation("src/main/resources/public")
+        staticFiles.location("public")
         webSocket("/ws/chat", ChatWebSocketService::class.java)
         injector.getInstance(Routes::class.java).register()
-    }
-
-    fun getHerokuAssignedPort(): Int {
-        val processBuilder = ProcessBuilder()
-        return if (processBuilder.environment()["PORT"] != null) {
-            processBuilder.environment()["PORT"]!!.toInt()
-        } else 9000
     }
 
     companion object {
