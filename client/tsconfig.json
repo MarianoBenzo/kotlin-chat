@@ -14,7 +14,7 @@
         "experimentalDecorators": true,
         "typeRoots" : ["node_modules/@types"],
         "moduleResolution": "node",
-        "baseUrl": "./",
+        "baseUrl": ".",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "paths": {
