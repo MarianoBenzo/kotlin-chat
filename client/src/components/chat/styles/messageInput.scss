@@ -1,42 +1,84 @@
 .container {
-    display: flex;
-    padding: 12px;
     background-color: #1e2428;
+    padding: 12px;
 
-    input[type=text], select {
-        width: 100%;
-        padding: 12px;
-        font-size: 14px;
-        display: inline-block;
-        box-sizing: border-box;
-        outline: 0;
-        margin-right: 12px;
-        background-color: #33383b;
-        border: 1px solid #33383b;
-        border-radius: 20px;
-        color: #f1f1f2;
-    }
+    .emojisContainer {
+        display: flex;
+        align-items: center;
+        padding-bottom: 12px;
 
-    button {
-        display: inline-block;
-        border: none;
-        padding: 12px 18px;
-        text-decoration: none;
-        background: #00af9b;
-        color: #ffffff;
-        border-radius: 20px;
-        font-size: 14px;
-        cursor: pointer;
-        text-align: center;
-        transition: background 250ms ease-in-out, transform 150ms ease;
+        .emojis {
+            flex-grow: 1;
+            margin-right: 12px;
+            overflow-x: scroll;
+            flex-direction: column;
+            flex-wrap: wrap;
+            display: flex;
+            height: 120px;
+            font-size: 24px;
 
-        &:hover,
-        &:focus {
-            background: #009080;
+            .emoji {
+                cursor: pointer;
+                margin: 0 2px 2px 0;
+            }
         }
 
-        &:active {
-            transform: scale(0.99);
+        .close {
+            text-align: center;
+            width: 69px;
+            font-size: 24px;
+            color: #828689;
+            cursor: pointer;
+        }
+    }
+
+    .messageInput {
+        display: flex;
+        align-items: center;
+
+        .emojisButton {
+            font-size: 40px;
+            margin-right: 12px;
+            margin-top: -10px;
+            color: #828689;
+            cursor: pointer;
+        }
+
+        input[type=text], select {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            display: inline-block;
+            box-sizing: border-box;
+            outline: 0;
+            margin-right: 12px;
+            background-color: #33383b;
+            border: 1px solid #33383b;
+            border-radius: 20px;
+            color: #f1f1f2;
+        }
+
+        button {
+            display: inline-block;
+            border: none;
+            padding: 12px 18px;
+            text-decoration: none;
+            background: #00af9b;
+            color: #ffffff;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 250ms ease-in-out, transform 150ms ease;
+
+            &:hover,
+            &:focus {
+                background: #009080;
+            }
+
+            &:active {
+                transform: scale(0.99);
+            }
         }
     }
 }
