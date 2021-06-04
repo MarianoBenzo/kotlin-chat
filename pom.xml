@@ -100,8 +100,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <nodeVersion>v4.6.0</nodeVersion>
-                    <npmVersion>2.15.9</npmVersion>
+                    <nodeVersion>v14.17.0</nodeVersion>
+                    <npmVersion>6.14.13</npmVersion>
                     <environmentVariables>
                         <NODE_ENV>${NODE_ENV}</NODE_ENV>
                     </environmentVariables>
