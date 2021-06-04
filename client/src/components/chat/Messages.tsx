@@ -13,25 +13,44 @@ const Messages = (props: Props) => {
     const {messages, usersTyping} = props;
 
     const [isBottom, setIsBottom] = useState(true);
+    const [newMessages, setNewMessages] = useState(false);
 
     const messagesEndRef = useRef(null)
 
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView()
+        scrollBottom()
     }, []);
 
     useEffect(() => {
         if (isBottom) {
-            messagesEndRef.current?.scrollIntoView()
+            scrollBottom()
+        } else {
+            setNewMessages(true)
         }
     }, [messages]);
+
+    const scrollBottom = () => {
+        messagesEndRef.current?.scrollIntoView()
+    }
 
     const handleScroll = (e) => {
         const isBottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
         if (isBottom) {
             setIsBottom(true)
+            setNewMessages(false)
         } else {
             setIsBottom(false)
+        }
+    }
+
+    const usersTypingText = () => {
+        switch (usersTyping.length) {
+            case 0:
+                return " "
+            case 1:
+                return `${usersTyping[0].name} is typing...`
+            default:
+                return `${usersTyping.slice(0, usersTyping.length - 1).map(user => user.name).join(", ")} and ${usersTyping[usersTyping.length - 1].name} are typing...`
         }
     }
 
@@ -71,17 +90,14 @@ const Messages = (props: Props) => {
                         }
                     })
                 }
-                { usersTyping.length != 0 &&
-                <div className={styles.usersTyping}>
-                    {usersTyping.length === 1 ?
-                        `${usersTyping[0].name} is typing...`
-                        :
-                        `${usersTyping.slice(0, usersTyping.length - 1).map(user => user.name).join(", ")} and ${usersTyping[usersTyping.length - 1].name} are typing...`
-                    }
-                </div>
-                }
+                <div className={styles.usersTyping}>{usersTypingText()}</div>
                 <div ref={messagesEndRef}/>
             </div>
+            {newMessages &&
+                <div className={styles.newMessages}>
+                    <button onClick={scrollBottom}>New messages</button>
+                </div>
+            }
             <MessageInput/>
         </div>
     );

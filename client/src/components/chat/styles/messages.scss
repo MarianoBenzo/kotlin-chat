@@ -2,7 +2,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #1e2428;
 
     @media (max-width: 767px) {
         height: 600px;
@@ -19,7 +18,6 @@
         overflow-y: scroll;
         flex-grow: 1;
         background-color: #0c1419;
-        padding-bottom: 12px;
         overflow-wrap: anywhere;
         font-size: 14px;
 
@@ -65,8 +63,41 @@
     }
 
     .usersTyping {
-        padding: 12px 12px 0 12px;
+        height: 16px;
+        padding: 12px 6px 6px 12px;
         font-style: italic;
         color: #787c7faa;
+    }
+
+    .newMessages {
+        position: relative;
+        display: flex;
+        justify-content: center;
+
+        button {
+            position: absolute;
+            bottom: 0;
+            margin-bottom: 12px;
+            display: inline-block;
+            border: none;
+            padding: 6px 12px;
+            text-decoration: none;
+            background: #00af9b;
+            color: #ffffff;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 250ms ease-in-out, transform 150ms ease;
+
+            &:hover,
+            &:focus {
+                background: #009080;
+            }
+
+            &:active {
+                transform: scale(0.99);
+            }
+        }
     }
 }
