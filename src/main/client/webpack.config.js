@@ -30,7 +30,7 @@ module.exports = {
         ...entryPoints
     },
     output: {
-        path: path.resolve(__dirname, "../src/main/resources/public/static"),
+        path: path.resolve(__dirname, "../resources/public/static"),
         filename: "[name].js",
         chunkFilename: "[name].chunk.bundle.js",
         publicPath: "/static/"
