@@ -5,7 +5,7 @@ class ChatService {
     webSocket: WebSocket;
 
     constructor() {
-        this.webSocket = new WebSocket(`ws://${location.hostname}:${location.port}/ws/chat`);
+        this.webSocket = new WebSocket(`wss://${location.hostname}:${location.port}/ws/chat`);
     }
 
     init(
