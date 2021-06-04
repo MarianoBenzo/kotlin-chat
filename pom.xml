@@ -18,7 +18,6 @@
         <guice.version>5.0.1</guice.version>
 
         <main.class>KotlinChatApp</main.class>
-        <NODE_ENV>production</NODE_ENV>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin.code.style>official</kotlin.code.style>
@@ -88,24 +87,23 @@
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>install --prefix ./client</arguments>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>webpack build</id>
+                        <id>npm run build</id>
                         <goals>
-                            <goal>webpack</goal>
+                            <goal>npm</goal>
                         </goals>
                         <phase>generate-resources</phase>
+                        <configuration>
+                            <arguments>run build --prefix ./client</arguments>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
-                    <workingDirectory>/client</workingDirectory>
                     <nodeVersion>v14.17.0</nodeVersion>
                     <npmVersion>6.14.13</npmVersion>
-                    <environmentVariables>
-                        <NODE_ENV>${NODE_ENV}</NODE_ENV>
-                    </environmentVariables>
                 </configuration>
             </plugin>
 
