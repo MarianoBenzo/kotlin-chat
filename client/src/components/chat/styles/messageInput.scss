@@ -2,47 +2,9 @@
     background-color: #1e2428;
     padding: 12px;
 
-    .emojisContainer {
-        display: flex;
-        align-items: center;
-        padding-bottom: 12px;
-
-        .emojis {
-            flex-grow: 1;
-            margin-right: 12px;
-            overflow-x: scroll;
-            flex-direction: column;
-            flex-wrap: wrap;
-            display: flex;
-            height: 120px;
-            font-size: 24px;
-
-            .emoji {
-                cursor: pointer;
-                margin: 0 2px 2px 0;
-            }
-        }
-
-        .close {
-            text-align: center;
-            width: 69px;
-            font-size: 24px;
-            color: #828689;
-            cursor: pointer;
-        }
-    }
-
     .messageInput {
         display: flex;
         align-items: center;
-
-        .emojisButton {
-            font-size: 40px;
-            margin-right: 12px;
-            margin-top: -10px;
-            color: #828689;
-            cursor: pointer;
-        }
 
         input[type=text], select {
             width: 100%;

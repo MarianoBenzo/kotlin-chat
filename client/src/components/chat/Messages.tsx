@@ -95,7 +95,7 @@ const Messages = (props: Props) => {
             </div>
             {newMessages &&
                 <div className={styles.newMessages}>
-                    <button onClick={scrollBottom}>New messages</button>
+                    <button onClick={scrollBottom}>New messages ↓</button>
                 </div>
             }
             <MessageInput/>
