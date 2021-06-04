@@ -5,7 +5,8 @@ class ChatService {
     webSocket: WebSocket;
 
     constructor() {
-        this.webSocket = new WebSocket(`wss://${location.hostname}:${location.port}/ws/chat`);
+        const protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+        this.webSocket = new WebSocket(`${protocol}${location.hostname}:${location.port}/ws/chat`);
     }
 
     init(
@@ -16,6 +17,8 @@ class ChatService {
         addUserTyping: Function,
         removeUserTyping: Function
     ) {
+        this.sendPing()
+
         this.webSocket.onmessage = (messageEvent: MessageEvent) => {
             const messageWS = JSON.parse(messageEvent.data)
 
@@ -39,8 +42,6 @@ class ChatService {
                     removeUserTyping(messageWS.data)
                     break;
             }
-
-            console.log(`Received: ${messageWS.type}`, messageWS.data)
         }
 
         this.webSocket.onclose = () => {
@@ -50,6 +51,10 @@ class ChatService {
 
     sendMessageWS(type: ClientMessageWSType, data?: any) {
         this.webSocket.send(JSON.stringify(new MessageWS(type, data)));
+    }
+
+    sendPing() {
+        setInterval(() => this.sendMessageWS(ClientMessageWSType.PING), 30000);
     }
 }
 

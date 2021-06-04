@@ -27,6 +27,9 @@ class ChatWebSocketService {
         val messageWS = jacksonObjectMapper().readValue<MessageWS>(message)
 
         when (messageWS.type) {
+            ClientMessageWSType.PING.name -> {
+                emit(session, ServerMessageWSType.PONG)
+            }
             ClientMessageWSType.NEW_USER.name -> {
                 val id = ids.getAndIncrement()
                 val name = messageWS.data?.let { it as String } ?: "Unknown"
@@ -103,7 +106,7 @@ class ChatWebSocketService {
         }
     }
 
-    private fun emit(session: Session, type: ServerMessageWSType, data: Any?) {
+    private fun emit(session: Session, type: ServerMessageWSType, data: Any? = null) {
         val messageWS = MessageWS(type, data)
         session.remote.sendString(jacksonObjectMapper().writeValueAsString(messageWS))
     }

@@ -9,6 +9,7 @@ export default class MessageWS {
 }
 
 export enum ClientMessageWSType {
+	PING = "PING",
 	NEW_USER = "NEW_USER",
 	NEW_MESSAGE = "NEW_MESSAGE",
 	STARTED_TYPING = "STARTED_TYPING",

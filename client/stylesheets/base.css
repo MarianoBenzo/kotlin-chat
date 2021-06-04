@@ -1,3 +1,19 @@
+#app {
+    font-family: Rubik, Arial, sans-serif;
+    letter-spacing: 0.6px;
+    line-height: 1.2;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #090e11;
+}
+
+@media (max-width: 767px) {
+    #app {
+        position: static;
+    }
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)

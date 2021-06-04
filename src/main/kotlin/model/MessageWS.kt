@@ -6,6 +6,7 @@ class MessageWS(val type: String, val data: Any?) {
 }
 
 enum class ClientMessageWSType {
+    PING,
     NEW_USER,
     NEW_MESSAGE,
     STARTED_TYPING,
@@ -13,6 +14,7 @@ enum class ClientMessageWSType {
 }
 
 enum class ServerMessageWSType {
+    PONG,
     USERS,
     ADD_USER,
     REMOVE_USER,

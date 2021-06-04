@@ -1,20 +1,17 @@
 import React, {Suspense, lazy} from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import styles from "./styles/app.scss";
 
 const Chat = lazy(() => import("components/chat/ChatWrapper"));
 
 const App = () => (
-        <div className={styles.container}>
-            <BrowserRouter>
-                <Suspense fallback={null}>
-                    <Switch>
-                        <Route exact path="/" component={Chat}/>
-                    </Switch>
-                </Suspense>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter>
+            <Suspense fallback={null}>
+                <Switch>
+                    <Route exact path="/" component={Chat}/>
+                </Switch>
+            </Suspense>
+        </BrowserRouter>
 );
 
 ReactDOM.render(<App/>, document.getElementById("app"));
